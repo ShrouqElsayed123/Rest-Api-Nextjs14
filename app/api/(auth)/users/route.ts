@@ -7,16 +7,15 @@ export async function GET() {
     try {
         await connect();
         const users = await User.find();
-        return NextResponse.json(JSON.stringify(users
-
-        ));
+        return new NextResponse(JSON.stringify(users), { status: 200 });
     }
-    catch (error) {
-        console.error(error); // هيتطبع الخطأ في الكونسول
-        return NextResponse.json(
-            { error: "Failed to fetch users" },
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    catch (error: any) {
+        console.error(error);
+
+        return new NextResponse(
+            JSON.stringify({ error: "Failed to fetch users" }),
             { status: 500 }
         );
     }
-
 }
